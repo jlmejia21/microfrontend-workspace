@@ -1,16 +1,24 @@
-import { NgModule } from '@angular/core';
+import { Injector, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppComponent } from './app.component';
+import { AdminComponent } from './admin/admin.component';
+import { createCustomElement } from '@angular/elements';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AdminComponent
   ],
   imports: [
     BrowserModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+  constructor(private injector: Injector) { }
+
+  ngDoBootstrap() {
+    const admincomponent = createCustomElement(AdminComponent, { injector: this.injector });
+    customElements.define('app-admin', admincomponent);
+  }
+}
